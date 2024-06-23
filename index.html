@@ -7,9 +7,72 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    
+    <input type="text" class="title" value="title">
+    <input type="text" class="author" value="author">
+    <input type="text" class="pages" value="page count">
+    <input type="text" class="read" value="read or not read">    
+    <button class="addBook">Add Book</button>
+    <div class="libraryContainer"></div>
 </body>
 <script>
+    const myLibrary = [];
+    let container = document.querySelector('.libraryContainer');
+
+    //creates new book
+    function book(title, author, pages, read){
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
+        this.info = `${this.title} by ${this.author}, ${this.pages} pages, ${this.read}`;
+    }
     
+    let theHobbit = new book('The Hobbit', 'J.R.R Tolkien', 295, "not read");
+
+    //adds new book to library
+    function addBookToLibrary(){
+        let title = document.querySelector(".title").value;
+        let author = document.querySelector(".author").value;
+        let pages = document.querySelector(".pages").value;
+        let read = document.querySelector(".read").value;
+        let newBook = new book(title, author, pages, read);
+        myLibrary.push(newBook);
+        console.log(newBook);
+    }
+    
+    let addBook = document.querySelector(".addBook");
+    addBook.addEventListener('click', () => {
+        addBookToLibrary();
+        displayBooks();
+        
+        
+    });
+
+    
+    // displays new book when added to myLibrary and removes book when button is clicked
+    function displayBooks(){
+        container.innerHTML = '';
+    for(let i = 0; i < myLibrary.length; i++){
+        let box = document.createElement('div');
+        box.setAttribute("class", "box");
+        container.appendChild(box);
+        box.textContent = myLibrary[i].info;
+        let button = document.createElement('button');
+        button.setAttribute('class', "button");
+        box.appendChild(button);
+        button.textContent = "remove";
+
+        button.addEventListener('click', () => {
+                removeBook(i);
+            });
+    };        
+    }
+
+
+    function removeBook(index) {
+        myLibrary.splice(index, 1);
+        displayBooks();
+    }
+
 </script>
 </html>
