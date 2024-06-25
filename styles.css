@@ -1,0 +1,25 @@
+.box{
+    background-color: #9ca3af;
+    width: 100%;
+    padding: 3%;
+
+    
+    
+}
+
+.head{
+    padding-bottom: 2%;
+    border-bottom: 1px solid;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2%;
+}
+.input{
+    margin: 2%;
+}
+.libraryContainer{
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: auto;
+    gap: 1%;
+}

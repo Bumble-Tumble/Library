@@ -7,11 +7,13 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <input type="text" class="title" value="title">
-    <input type="text" class="author" value="author">
-    <input type="text" class="pages" value="page count">
-    <input type="text" class="read" value="read or not read">    
-    <button class="addBook">Add Book</button>
+    <div class="head">
+    <input type="text" class="title input" value="title">
+    <input type="text" class="author input" value="author">
+    <input type="text" class="pages input" value="page count">  
+    <button class="addBook input">Add Book</button>
+    </div>
+
     <div class="libraryContainer"></div>
 </body>
 <script>
@@ -19,12 +21,13 @@
     let container = document.querySelector('.libraryContainer');
 
     //creates new book
-    function book(title, author, pages, read){
+    function book(title, author, pages){
         this.title = title;
         this.author = author;
         this.pages = pages;
-        this.read = read;
-        this.info = `${this.title} by ${this.author}, ${this.pages} pages, ${this.read}`;
+        this.read = "not read";
+        this.info1 = `${this.title} by ${this.author}`;
+        this.info2 = `${this.pages} pages`;
     }
     
     let theHobbit = new book('The Hobbit', 'J.R.R Tolkien', 295, "not read");
@@ -34,12 +37,12 @@
         let title = document.querySelector(".title").value;
         let author = document.querySelector(".author").value;
         let pages = document.querySelector(".pages").value;
-        let read = document.querySelector(".read").value;
-        let newBook = new book(title, author, pages, read);
+        let newBook = new book(title, author, pages);
         myLibrary.push(newBook);
         console.log(newBook);
     }
     
+    // gives add button functionality 
     let addBook = document.querySelector(".addBook");
     addBook.addEventListener('click', () => {
         addBookToLibrary();
@@ -56,13 +59,36 @@
         let box = document.createElement('div');
         box.setAttribute("class", "box");
         container.appendChild(box);
-        box.textContent = myLibrary[i].info;
-        let button = document.createElement('button');
-        button.setAttribute('class', "button");
-        box.appendChild(button);
-        button.textContent = "remove";
+        let bookText1 = document.createElement("p");
+        bookText1.setAttribute("class", "bookText1");
+        let bookText2 = document.createElement('p');
+        bookText2.setAttribute('class', "bookText2");
+        box.appendChild(bookText1);
+        box.appendChild(bookText2);
+        bookText1.textContent = myLibrary[i].info1;
+        bookText2.textContent = myLibrary[i].info2;
+        let readButt = document.createElement('button');
+        readButt.setAttribute("class", "readButt");
+        box.appendChild(readButt);
+        readButt.textContent = myLibrary[i].read;
+        let removeButt = document.createElement('button');
+        removeButt.setAttribute('class', "removeButt");
+        box.appendChild(removeButt);
+        removeButt.textContent = "remove";
 
-        button.addEventListener('click', () => {
+        // adds toggablitly between read and not read
+        readButt.addEventListener("click", () => {
+            if (readButt.textContent === "read"){
+                readButt.textContent = "not read";
+                myLibrary[i].read = "not read"
+            } else if (readButt.textContent === "not read"){
+                readButt.textContent = "read";
+                myLibrary[i].read = "read";
+            };
+        })
+
+        // allows user to remove books
+        removeButt.addEventListener('click', () => {
                 removeBook(i);
             });
     };        
